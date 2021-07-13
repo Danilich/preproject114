@@ -52,7 +52,7 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public void removeUserById(long id) {
-        Session sess = Util.getSessionFactory().openSession();
+        Session sess = sessionFactory.openSession();
         sess.beginTransaction();
         Query query = sess.createQuery("delete User where id = :id");
         query.setParameter("id", id).executeUpdate();
@@ -64,7 +64,7 @@ public class UserDaoHibernateImpl implements UserDao {
     @SuppressWarnings("unchecked")
     public List<User> getAllUsers() {
         List<User> userList;
-        Session sess = Util.getSessionFactory().openSession();
+        Session sess = sessionFactory.openSession();
         sess.beginTransaction();
         userList = sess.createQuery("from User").list();
         sess.getTransaction().commit();
@@ -75,7 +75,7 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public void cleanUsersTable() {
-        Session sess = Util.getSessionFactory().openSession();
+        Session sess = sessionFactory.openSession();
         sess.beginTransaction();
         sess.createSQLQuery("truncate table users").executeUpdate();
         sess.getTransaction().commit();
